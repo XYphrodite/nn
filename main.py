@@ -1,6 +1,6 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
 
 # Обучающее множество
 X_train = np.array([[0, 0, 0, 0, 0],
@@ -54,6 +54,18 @@ class SaveWeights(tf.keras.callbacks.Callback):
 # Обучение модели с использованием обратного вызова для сохранения весов и смещений
 model.fit(X_train, y_train, epochs=1000, verbose=0, callbacks=[SaveWeights()])
 
+# Вывод конечных весов и смещений
+for i, layer in enumerate(model.layers):
+    print(f"Layer {i + 1}:")
+    print(f"Final Weights:\n{layer.get_weights()[0]}")
+    print(f"Final Biases:\n{layer.get_weights()[1]}")
+    print()
+
+# Пример использования модели
+X_new = np.array([[0, 1, 0, 0, 0]])
+predictions = model.predict(X_new)
+print(predictions)
+
 # Визуализация изменения весов и смещений
 for layer_num, weights_biases in enumerate(zip(*weight_history)):
     plt.figure(figsize=(8, 6))
@@ -67,14 +79,21 @@ for layer_num, weights_biases in enumerate(zip(*weight_history)):
     plt.grid(True)
     plt.show()
 
-# Вывод конечных весов и смещений
-for i, layer in enumerate(model.layers):
-    print(f"Layer {i + 1}:")
-    print(f"Final Weights:\n{layer.get_weights()[0]}")
-    print(f"Final Biases:\n{layer.get_weights()[1]}")
-    print()
 
 # Пример использования модели
-X_new = np.array([[0, 0, 0, 1, 1]])
-predictions = model.predict(X_new)
-print(predictions)
+while(True):
+    try:
+        print("Please enter a number: ")
+        X_new_str = input()
+        print(X_new_str)
+        a = np.fromstring(X_new_str, dtype=float, sep=' ')
+        print(a)
+        X_new = np.array(
+            [[float(a[0]), float(a[1]), float(a[2]), float(a[3]), float(a[4])]])
+        print(X_new)
+        predictions = model.predict(X_new)
+        print(predictions)
+    except ValueError:
+        print("Oops!  That was no valid number.  Try again...")
+
+
