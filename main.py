@@ -70,7 +70,7 @@ print(predictions)
 for layer_num, weights in enumerate(zip(*weight_history)):
     plt.figure(figsize=(8, 6))
     for i, layer_weights in enumerate(weights):
-        plt.plot(layer_weights.flatten(), label=f'Epoch {i + 1}')
+        plt.plot(layer_weights.flatten(), label=f'Epoch {(i + 1)*100}')
     plt.title(f'Layer {layer_num + 1} Weights')
     plt.xlabel('Weight Index')
     plt.ylabel('Weight Value')
